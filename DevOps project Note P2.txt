@@ -1,0 +1,135 @@
+===========================================
+-------------------------> DevOps P2<----------------------------
+===========================================
+
+Phases:-
+Require Analyst - bussiness analyst
+plan - num of team dev/test/ops/ num of days/month
+System Design[uml diagram] - architect design /code layout /data flow chat 
+Implementation - developer
+Testing - code test
+Deployment - delivery
+Maintainance - main tain the application
+
+Kops Cluster Creation 
+Jenkins installation 
+
+### Configure Webhook in github & Jenkins 
+
+Git hub login
+Your Git repo settings 
+Webhooks 
+Add webhooks
+Payload URL * = http://54.196.252.31:8080/github-webhook/ 
+add webhooks
+jenkins login
+jenkins job -> configuration -> build triggers -> GitHub hook trigger for GITScm polling (ENABLE THIS)
+
+### Make a commit & Run the deployment 
+make a changes in form.html 
+git add .
+git commit -am " STAGE RUN "
+git push orgin master 
+Check Deployment in Kubernetes 
+Default - Rolling stratagies
+
+Git hub repo Names:-
+
+project name - lowercase - Underscores for Spaces - Keep It Short and Concise
+Web Development Projects:-
+fe-components #frontend-components
+hdfc_banking_app
+Data Science:-
+machine-learning-models
+APIs and Backend Services:-
+weather-api
+Automation and DevOps Scripts:-
+deployment-scripts
+
+Jenkins job name:- 
+
+Descriptive Names with Purpose:-
+nonprod-deploy-hdfc-webapp
+prod-deploy-hdfc-webapp
+
+If this job will be build infra terrafrom tool 
+hdfc-non-prod-bois 
+hdfc-prod-bois
+
+
+Plugins:-
+
+Plugins 
+
+monitoring :- 
+stage view 
+Blue ocean
+Build monitorview
+Build pipeline view
+Delivery pipleine 
+
+deploy :- 
+Deploy to container 
+
+Build:- 
+maven 
+MS build 
+
+Code quality :-
+Sonar Qube 
+
+AWS:-
+Amazon Web Services SDK :: EC2
+Amazon Web Services SDK :: All 
+Amazon Web Services SDK :: CloudFormation
+Amazon Web Services SDK :: ECR
+Amazon Web Services SDK :: ECS
+Amazon Web Services SDK :: EFS
+Amazon Web Services SDK :: Elastic Beanstalk
+Amazon Web Services SDK :: IAM
+Amazon Web Services SDK :: kinesis
+Amazon Web Services SDK :: Logs
+Amazon Web Services SDK :: Minimal
+Amazon Web Services SDK :: SNS
+Amazon Web Services SDK :: Secrets Manager
+Amazon Web Services SDK :: SSM
+CloudBees License Manager
+CloudBees Monitor Plugins
+CloudBees Nodes Plus Plugin
+CloudBees Node Plus Plugin
+
+Security:-
+Warning plugin 
+Workspace Cleanup Plugin
+Xray - Test Management for Jira
+
+
+Real time most of the stages will be like this :-
+
+Normal - python based project 
+Non-Production 
+SCM checkout --> Sonar Scan --> Linter Docker file --> Docker Build --> Should I deploy to Non-prod? --> Deploy to Non-prod 
+Production 
+Should I deploy to PROD --> Deploy to Prod --> Deploy to DR
+
+
+High end - java
+Declaratice:  
+-> Checkout -> Maven Build -> Maven Digital Build -> Maven CD Build -> Maven Eureka Build -> Maven java 21 build -> React Build -> Gradle build -> Code Quality Analysis -> Code Quality Gating -> Deploy Notify -> Container Build -> Container Upload -> svn files copy -> manifest upload -> Pod_deploy -> Declarative Post action
+Checkout 	
+SCM
+
+
+Email Chat - Once Interview Completed 
+
+Hi,
+	The interview process was good It was Puntual 
+and went well for me. Thanks for the opportunity. I
+am very mush exited to be a part of the (comp-name) team.
+
+Thanks and Regards,
+Sathish
+
+
+
+

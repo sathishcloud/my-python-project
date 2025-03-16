@@ -1,0 +1,115 @@
+=====================================================
+----------------------------->GROOVY SCRIPTS<-------------------------------
+=====================================================
+
+https://www.jenkins.io/doc/book/pipeline/
+
+Declarative Pipeline fundamentals - https://www.jenkins.io/doc/book/pipeline/#declarative-pipeline-fundamentals
+
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                //
+            }
+        }
+        stage('Test') {
+            steps {
+                //
+            }
+        }
+        stage('Deploy') {
+            steps {
+                //
+            }
+        }
+    }
+}
+
+Scripted Pipeline fundamentals - https://www.jenkins.io/doc/book/pipeline/#scripted-pipeline-fundamentals
+
+Jenkinsfile (Scripted Pipeline)
+node {  
+    stage('Build') { 
+        // 
+    }
+    stage('Test') { 
+        // 
+    }
+    stage('Deploy') { 
+        // 
+    }
+}
+
+==========================================
+Step 001
+
+pipeline {
+    agent any # agent any - any means it will run a job any node like master or worker node
+
+    stages {
+        stage('Hello') {
+            steps {
+                echo 'Hello World'
+            }
+        }
+    }
+}
+==========================================
+Step 003
+
+how we can split multiple stages 
+
+pipeline {
+    agent any
+
+    stages {
+        stage('Hello1') {
+            steps {
+                echo 'Hello World'
+            }
+        }
+        stage('Hello2') {
+            steps {
+                echo 'Hello World'
+            }
+        }
+        stage('Hello3') {
+            steps {
+                echo 'Hello World'
+            }
+        }
+    }
+}
+#must stage name will be different
+============================================
+pipeline {
+    agent any
+
+    stages {
+        stage('Pull Code From GitHub') {
+            steps {
+                git 'https://github.com/Iam-mithran/SaturdayProject.git'
+            }
+        }
+    }
+}
+#pull code from github 
+=============================================
+Containerize the Python app and publish to DockerHub
+pipeline {
+    agent any
+
+    stages {
+        stage('Pull Code From GitHub') {
+            steps {
+                git 'https://github.com/Iam-mithran/SaturdayProject.git'
+            }
+        }
+    }
+}
+
+
+
+

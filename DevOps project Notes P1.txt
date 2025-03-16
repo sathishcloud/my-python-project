@@ -1,0 +1,339 @@
+===========================================
+-------------------------> DevOps P1<----------------------------
+===========================================
+
+
+PROGRAMMING LANGUAGE - PYTHON 
+
+
+DevOps - CI CD pipeline stages connectivity
+
+Python and perl don't have build tool - interpreter language 
+
+Build Tool 
+Java		- Maven/Gradle 
+C++ 		- GNU compiler
+C 		- Cmake
+.net 	- MSBuild
+Nodejs 	- NPM
+php - ? 
+
+Developer Test
+Unit Test = they will test each module ( TDD - Test Driven Development ) eg:- Royal enfield 
+pyunit
+junit 
+
+java - compile ( Web application )
+memory allocation
+Compile time - ( code work space ) / Run time - ( output space )
+
+python - interpreter ( gaming application ) 
+No pre memory allocation 
+Compile time - ( code work space ) / Run time - ( output space )
+
+IDE - stands for Integrated Development Environment, a software that combines commonly used developer tools into a GUI application.
+Java - eclipse 
+Python - pycharm
+java and python - IntelliJ 
+
+
+Free style :-
+(User Interface-UI) method
+
+Pipeline :-
+Job as a code method 
+JENKINS PIPELINE SYNTAX :- https://www.jenkins.io/doc/book/pipeline/
+
+Different Between Scripted and Declarative job!!
+
+Jenkins: pipeline 
+=> Pipeline is a collection of steps or jobs which are interlinked with one another in a sequence.
+=> jenkins supports different plugins which help to implement CI & CD delivery pipeline into jenkins
+=> A CI/CD pipeline is an automated way of getting source code form VCS, Code Inspection, Test cases execution, Build, Artifact creation, Artifact Repository, and deployment on the servers.
+=> A pipeline can be written using two types of syntax - Scripted and Declarative 
+
+Scripted:-
+- Groovy scripting 
+- Old
+- Starts with Node 
+- 100% of the work we can achive in scripted pipeline 
+
+Scripted Pipeline is kind of using old type of syntax 
+Scripted pipeline provides a lot of flexiblity and control over the workflow, but it can be more complex and verbose-(complicate to explain) than declarative pipeline
+Scripeted pipeline strongly uses the groovy based syntax.
+
+Syntax: Scripted Pipeline
+
+node { 				//scripted pipeline start with node job will be running on jenkins node( node )
+  	stage('dev') { 	       //this line define stage ( stage('dev') { )
+              echo 'build'     //this line we mentiones arguments
+	}
+  	stage('test') {
+              echo 'build'
+	}
+}
+ 
+Declarative:-
+- Groovy scripting 
+- New 
+- Starts with Pipeline
+- 90% of the work we can achive in Declarative pipeline
+
+Declarative pipeline is a more recent addition to jenkins and provied a more structure and simple syntax for defining pipelines .
+The code is simplified becaus declarative sysntax is more limite. You won't be able to inject code into the pipeline whenever you want
+sush  a pipeline model is not really the best choise
+
+Pipeline: Declarative 
+
+pipeline { 		//Declaratice pipeline starts with pipeline 
+	agent any	//agent which want to run this job we go with any which means this job will run anywhere
+	options {
+		timeout(time:1, unit: 'HOURS' )
+	}
+	environment { 		//what kind of enviroment you need
+		JAVA = 'java8'		// i need java8
+	}
+	stages {
+		stage('dev') {
+			steps{
+				echo 'dev'
+			}
+		}
+		stage('test') {
+			steps{
+				echo 'test'
+			}
+		}
+		stage('deploy') {
+			when {		//with in the stage we are mention when its a part of the stage 
+				branch ' production '
+			}
+			steps{
+				echo 'deploy'
+			}
+		}
+	}
+}
+
+pipeline { 		 
+	agent any
+	options {
+		timeout(time:1, unit: 'HOURS' )
+	}
+	environment {
+		JAVA = 'java8'		//Jenkins will create an environment variable called JAVA with the value java8.
+	} 					//In your pipeline steps, when you reference ${JAVA}, it will be replaced with the value java8.
+	stages {
+		stage('dev') {
+			steps{
+				echo 'dev'
+			}
+		}
+		stage('test') {
+			steps{
+			   sh 'date'
+			}
+		}
+		stage('preprod') {
+			steps{
+				echo 'preprod'
+			}
+		}
+		stage('deploy') {
+			when {
+                environment name: 'cluster', value: 'prod'
+                
+			}
+			steps{
+				echo 'deploy'
+			}
+		}
+	}
+}
+
+====================================
+
+Scripted vs Declarative Pipeline:
+	1. Pipeline code validation at startup
+Scripted pipline:
+- code validation happens during pipeline execution.
+- Errors or issues in the script may only be found when the pipeline runs.
+Declarative pipeline:
+- code validation happens when the pipeline is loaded into jenkins.
+- errors of issues in the script are detected upfront before runnint the pipeline.
+	2. Restart from stage
+Scripted pipline:
+- Restart form a specific stage is not directly supported.
+- Restart requires running the entire pipeline form the beginning.
+- Previous stage run again. this consume more time
+Declarative pipeline:
+- Restart from specific stage is supported.
+- Only stages after the specfic stage need to be executed 
+- This save time and resources by skipping already completed stages.
+	3. Skipping stage
+Scripted pipline:
+- No built-in support for skipping stage.
+- all stage will be executed sequentially.
+Declarative pipeline:
+- Supports skipping stages using the "when" directive 
+- Allows conditional skipping of stages based on specified conditions.
+	4. which one should you choose?
+Scripted Pipeline:
+- Well-suited for complex build and deployment workflows that require advanced script logic.
+- May require more effort to maintain and update as pipeline complexity increases.
+Declarative Pipeline:
+- Supports version control of pipeline code, making it easier to track changes and collaborate.
+- facilitates better pipeline scalability and readability, especially for larger and complex projects.
+
+=========================================================
+Step001:-
+-----------
+
+Practicals Starts:-
+
+Login jenkins
+create a Pipeline Job
+
+Public Git Hub Repo :-
+
+pipeline {
+    agent any
+    stages {
+        stage('Pull Code From GitHub') {
+            steps {
+                git 'https://github.com/sathishcloud/microserver-proj001.git'
+            }
+        }
+    }
+}
+
+Private Git Hub Repo :- 
+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
+
+pipeline {
+    agent any
+
+    stages {
+        stage('Pull Code From GitHub') {
+            steps {
+                git credentialsId: 'gitaccesstocken', url: 'https://github.com/sathishcloud/sathishprivate.git'
+            }
+        }
+    }
+}
+
+====================================
+Step002:-
+-------------
+
+Containerize the Python app and publish to DockerHub
+
+Docker hub login 
+apt install docker.io -y 
+
+
+FROM python:3.9  								##Base img - python based application 
+WORKDIR /code								##all the give below command will be running from this directory
+COPY ./requirements.txt /code/requirements.txt	##SRC-./req.txt DEST-/code/req.txt
+RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt		##our code have certain pre-req all the pre-req will down
+COPY ./main.py /code/main.py					##SRC-./main.py DEST-/code/main.py
+COPY ./form.html /code/form.html				##SRC-./form.html DEST-/code/form.html
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80"]	##python application running command mention specified port
+
+Uvicorn is a high-performance web server specifically designed to run Python web applications built on the ASGI (Asynchronous Server Gateway Interface) standard.
+
+***before you build this code do run This pipeline***
+
+pipeline {
+    agent any
+    stages {
+        stage('Pull Code From GitHub') {
+            steps {
+                git 'https://github.com/sathishcloud/microserver-proj001.git'
+            }
+        }
+        stage('Build the Docker image') {
+            steps {
+                sh 'docker images'
+            }
+        }
+    }
+}
+
+You will get permission denied error 
+In linux there are 3 types of users will be there normal Regular User-ubuntu, Root User-root, System User-application user like jenkins user.
+
+To give jenkins permission to run sudo commands 
+- test001
+        stage('Build the Docker image') {
+            steps {
+                sh 'sudo docker images'
+            }
+        }
+sudo: a password is required
+
+- test002
+check google - run a command as root in jenkins 
+Try adding jenkins user to sudo group 
+real time we do:-
+sudo su - 
+usermod -a -G sudo  jenkins
+
+now we do:-
+vi /etc/sudoers
+# User privilege specification
+root    ALL=(ALL:ALL) ALL
+jenkins ALL=(ALL) NOPASSWD: ALL  #add this line 
+exit 
+swith root = no it will work 
+
+now run a pipeline it will work 
+
+=========================================
+Step003:-
+------------
+
+pipeline {
+    agent any
+
+    stages {
+        stage('Pull Code From GitHub') {
+            steps {
+                git 'https://github.com/sathishcloud/microserver-proj001.git'
+            }
+        }
+        stage('Build the Docker image') {
+            steps {
+                sh 'sudo docker build -t hdfc_non_prod_micro /var/lib/jenkins/workspace/hdfc_non_prod/'
+                sh 'sudo docker tag hdfc_non_prod_micro sathishcloud/hdfc_non_prod_micro:latest'
+                sh 'sudo docker tag hdfc_non_prod_micro sathishcloud/hdfc_non_prod_micro:${BUILD_NUMBER}'
+            }
+        }
+        stage('Push the Docker image') {
+            steps {
+                sh 'sudo docker image push sathishcloud/hdfc_non_prod_micro:latest'
+                sh 'sudo docker image push sathishcloud/hdfc_non_prod_micro:${BUILD_NUMBER}'
+            }
+        }
+        stage('Deploy on Kubernetes') {
+            steps {
+                sh 'sudo kubectl apply -f /var/lib/jenkins/workspace/hdfc_non_prod/pod.yaml'
+                sh 'sudo kubectl rollout restart deployment loadbalancer-pod' //when changes happen deployment will restart
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
